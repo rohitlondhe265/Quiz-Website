@@ -1,8 +1,7 @@
-import './App.css'
 
 function App() {
   return (
-    <div>Vite React Starter Template</div>
+    <div className="bg-red-400">Vite React Starter Template</div>
   )
 }
 
