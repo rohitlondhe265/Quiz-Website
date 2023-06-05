@@ -1,38 +1,73 @@
+import { Outlet, RouterProvider, createBrowserRouter } from "react-router-dom";
+import Header from "./components/Header.jsx"
+import Footer from "./components/Footer.jsx"
+import axios from "axios";
+import Home from "./pages/Home";
+import Quiz from "./pages/Quiz.jsx"
+import Result from "./pages/Result.jsx"
+import { useState } from "react";
+
+const Layout = () => {
+  return (
+    <>
+      <Header />
+      <Outlet />
+      <Footer />
+    </>
+  )
+};
 
 function App() {
-  return (<>
-    <h1>react vite tailwind daisyui</h1>
-    <div data-theme="cupcake" className="text-4xl">
-      <button className="btn">Button</button>
-      <button className="btn btn-lg btn-neutral">Neutral</button>
-      <button className="btn btn-primary">Button</button>
-      <button className="btn btn-sm btn-secondary">Button</button>
-      <button className="btn btn-xs btn-accent">Button</button>
-      <button className="btn btn-ghost">Button</button>
-      <button className="btn btn-link">Button</button></div>
-    <span className="loading loading-spinner text-primary"></span>
-    <span className="loading loading-spinner text-secondary"></span>
-    <span className="loading loading-spinner text-accent"></span>
-    <span className="loading loading-spinner text-neutral"></span>
-    <span className="loading loading-spinner text-info"></span>
-    <span className="loading loading-spinner text-success"></span>
-    <span className="loading loading-spinner text-warning"></span>
-    <span className="loading loading-spinner text-error"></span>
-    <select className="select select-primary w-full max-w-xs">
-      <option disabled selected>What is the best TV show?</option>
-      <option>Game of Thrones</option>
-      <option>Lost</option>
-      <option>Breaking Bad</option>
-      <option>Walking Dead</option>
-    </select>
-    <input type="text" placeholder="Type here" className="input input-bordered input-primary w-full max-w-xs" />
-    <div className="radial-progress bg-primary text-primary-content border-4 border-primary" style={{"--value":70}}>70%</div>
-    <div className="radial-progress" style={{"--value":0}}>0%</div>
-<div className="radial-progress" style={{"--value":20}}>20%</div>
-<div className="radial-progress" style={{"--value":60}}>60%</div>
-<div className="radial-progress" style={{"--value":80}}>80%</div>
-<div className="radial-progress" style={{"--value":100}}>100%</div>
-  </>)
+
+  const [questions, setQuestions] = useState();
+  const [name, setName] = useState();
+  const [score, setScore] = useState(0);
+
+  const fetchQuestions = async (category = "", difficulty = "") => {
+    const { data } = await axios.get(
+      `https://opentdb.com/api.php?amount=10${category && `&category=${category}`
+      }${difficulty && `&difficulty=${difficulty}`}&type=multiple`
+    );
+
+    setQuestions(data.results);
+  };
+
+
+  const router = createBrowserRouter([
+    {
+      path: "/",
+      element: <Layout />,
+      children: [
+        {
+          path: "/",
+          element: <Home
+            name={name}
+            setName={setName}
+            fetchQuestions={fetchQuestions} />
+        },
+        {
+          path: "/quiz",
+          element: <Quiz
+            name={name}
+            questions={questions}
+            score={score}
+            setScore={setScore}
+            setQuestions={setQuestions} />
+        },
+        {
+          path: "/result",
+          element: <Result
+            name={name} score={score} />
+        }
+      ]
+    }
+  ]);
+
+  return (
+    <div className="container mx-auto">
+      <RouterProvider router={router} />
+    </div>
+  )
 }
 
-export default App
+export default App;
