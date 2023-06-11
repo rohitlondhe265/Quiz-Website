@@ -47,14 +47,14 @@ const Question = ({
     <div className="w-full flex flex-col items-center">
       <h1>Question {currQues + 1} :</h1>
 
-      <div className="w-11/12 flex flex-col items-center justify-center rounded-md border-gray-600 border-2 py-3 my-3">
+      <div className="w-full lg:w-11/12 flex flex-col items-center justify-center rounded-md border-gray-600 border-2 px-3 py-3 my-1 lg:my-3">
         <h2>{questions[currQues].question}</h2>
         <div className="flex flex-wrap items-center justify-around gap-3 my-6">
           {error && <ErrorMessage>{error}</ErrorMessage>}
           {options &&
             options.map((i) => (
               <button
-                className={`border py-2 px-6 ${selected && handleSelect(i)}`}
+                className={`border rounded-lg py-2 px-6 ${selected && handleSelect(i)}`}
                 key={i}
                 onClick={() => handleCheck(i)}
                 disabled={selected}

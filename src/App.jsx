@@ -22,6 +22,7 @@ function App() {
   const [questions, setQuestions] = useState();
   const [name, setName] = useState();
   const [score, setScore] = useState(0);
+  const [theme, setTheme] = useState("dark");
 
   const fetchQuestions = async (category = "", difficulty = "") => {
     const { data } = await axios.get(
@@ -64,8 +65,10 @@ function App() {
   ]);
 
   return (
-    <div className="container mx-auto">
-      <RouterProvider router={router} />
+    <div data-theme={theme}>
+      <div className="px-6 container mx-auto" >
+        <RouterProvider router={router} />
+      </div>
     </div>
   )
 }

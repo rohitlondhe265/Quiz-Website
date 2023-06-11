@@ -11,8 +11,8 @@ const Result = ({ name, score }) => {
   }, [name, history]);
 
   return (
-    <div className="flex flex-col justify-center h-96 border">
-      <span className="text-center text-6xl">Final Score : {score}</span>
+    <div className="flex flex-col justify-center h-96">
+      <span className="text-center text-5xl text-secondary-content lg:text-6xl">Final Score : {score}</span>
       <button onClick={()=> navigate("/")} className="btn btn-sm btn-secondary self-center mt-12">Go to homepage</button>
     </div>
   );

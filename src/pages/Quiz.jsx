@@ -21,7 +21,7 @@ const Quiz = ({ name, questions, score, setScore, setQuestions }) => {
 
   return (
     <div className="flex flex-col items-center">
-      <span className="text-xl border shadow-lg p-3">Welcome, {name}</span>
+      <span className="text-lg lg:text-xl border shadow-xl p-2 rounded-md lg:p-3">Welcome, {name}</span>
       {questions ? (
         <>
           <div className="w-full flex justify-between uppercase m-3">
