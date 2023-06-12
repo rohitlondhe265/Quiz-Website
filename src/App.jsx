@@ -5,6 +5,7 @@ import axios from "axios";
 import Home from "./pages/Home";
 import Quiz from "./pages/Quiz.jsx"
 import Result from "./pages/Result.jsx"
+import DarkToggle from "./components/DarkToggle.jsx"
 import { useState } from "react";
 
 const Layout = () => {
@@ -22,7 +23,11 @@ function App() {
   const [questions, setQuestions] = useState();
   const [name, setName] = useState();
   const [score, setScore] = useState(0);
-  const [theme, setTheme] = useState("dark");
+
+  const [mode, setMode] = useState("dark");
+  const toggle = () => {
+    setMode((prev) => (prev === "dark" ? "light" : "dark"));
+  };
 
   const fetchQuestions = async (category = "", difficulty = "") => {
     const { data } = await axios.get(
@@ -65,8 +70,11 @@ function App() {
   ]);
 
   return (
-    <div data-theme={theme}>
+    <div data-theme={mode}>
       <div className="px-6 container mx-auto" >
+        <div className="absolute right-1 top-1 lg:right-36 lg:top-3">
+          <DarkToggle toggle={toggle} mode={mode}/>
+        </div>
         <RouterProvider router={router} />
       </div>
     </div>
